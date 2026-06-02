@@ -58,14 +58,14 @@ Each platform demonstrates:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        Unleash Server                        │
-│                    http://localhost:4242                      │
-│                                                              │
-│  ┌─────────────────┐        ┌──────────────────────────┐   │
-│  │   Admin Panel   │        │        PostgreSQL         │   │
-│  │  (browser UI)   │        │    (flag state storage)   │   │
-│  └────────┬────────┘        └──────────────────────────┘   │
-│           │ Admin API (/api/admin/...)                        │
+│                        Unleash Server                       │
+│                    http://localhost:4242                    │
+│                                                             │
+│  ┌─────────────────┐        ┌──────────────────────────┐    │
+│  │   Admin Panel   │        │        PostgreSQL        │    │
+│  │  (browser UI)   │        │    (flag state storage)  │    │
+│  └────────┬────────┘        └──────────────────────────┘    │
+│           │ Admin API (/api/admin/...)                      │
 └───────────┼─────────────────────────────────────────────────┘
             │
             │  ┌─────── CLIENT token ────────────────────────┐
@@ -79,14 +79,14 @@ Each platform demonstrates:
   │  Service (Java SDK)  │◄── Admin API calls on toggle ───────┤
   └──────────────────────┘                                     │
                                                                │
-  ┌──────────────────────┐   FRONTEND token                   │
-  │     Angular App      │◄── /api/frontend (SSE) ────────────┤
+  ┌──────────────────────┐   FRONTEND token                    │
+  │     Angular App      │◄── /api/frontend (SSE) ─────────────┤
   │       :4200          │──── toggle → /api/flags (backend) ──┤
   │  unleash-proxy-client│                                     │
   └──────────────────────┘                                     │
                                                                │
-  ┌──────────────────────┐   FRONTEND token                   │
-  │     Flutter App      │◄── /api/frontend (polls 15s) ──────┘
+  ┌──────────────────────┐   FRONTEND token                    │
+  │     Flutter App      │◄── /api/frontend (polls 15s) ───────┘
   │   (Chrome / Android) │──── toggle → /api/flags (backend)
   └──────────────────────┘
 ```
