@@ -1,0 +1,32 @@
+#!/bin/sh
+set -e
+
+# Resolve the Maven distribution URL from wrapper properties
+PROPERTIES_FILE=".mvn/wrapper/maven-wrapper.properties"
+DISTRIBUTION_URL=$(grep "^distributionUrl=" "$PROPERTIES_FILE" | cut -d'=' -f2-)
+
+# Derive a local cache dir from the URL
+MAVEN_HOME_DIR="$HOME/.m2/wrapper/dists/$(basename "$DISTRIBUTION_URL" .zip)"
+
+if [ ! -d "$MAVEN_HOME_DIR/bin" ]; then
+  echo "Downloading Maven from $DISTRIBUTION_URL ..."
+  mkdir -p "$MAVEN_HOME_DIR"
+  TMP_ZIP="$MAVEN_HOME_DIR/maven.zip"
+
+  if command -v curl > /dev/null 2>&1; then
+    curl -fsSL -o "$TMP_ZIP" "$DISTRIBUTION_URL"
+  elif command -v wget > /dev/null 2>&1; then
+    wget -q -O "$TMP_ZIP" "$DISTRIBUTION_URL"
+  else
+    echo "ERROR: neither curl nor wget found." >&2; exit 1
+  fi
+
+  unzip -q "$TMP_ZIP" -d "$MAVEN_HOME_DIR"
+  rm "$TMP_ZIP"
+  # Move contents up one level (unzip creates apache-maven-x.y.z/ subdirectory)
+  INNER=$(find "$MAVEN_HOME_DIR" -maxdepth 1 -mindepth 1 -type d | head -1)
+  mv "$INNER"/* "$MAVEN_HOME_DIR/"
+  rmdir "$INNER"
+fi
+
+exec "$MAVEN_HOME_DIR/bin/mvn" "$@"

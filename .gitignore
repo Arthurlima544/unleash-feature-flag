@@ -1,0 +1,21 @@
+# Backend
+backend/target/
+backend/.mvn/
+backend/*.iml
+
+# Angular
+frontend-web/node_modules/
+frontend-web/dist/
+frontend-web/.angular/
+
+# Flutter
+frontend-mobile/.dart_tool/
+frontend-mobile/.flutter-plugins
+frontend-mobile/.flutter-plugins-dependencies
+frontend-mobile/build/
+frontend-mobile/pubspec.lock
+
+# IDE
+.idea/
+.vscode/settings.json
+*.DS_Store

@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  frontend-web:
+    build: ./frontend-web
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend

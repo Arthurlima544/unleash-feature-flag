@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: learn-feature-flags
+
+feature-flags:
+  flags:
+    GENERAL_DARK_MODE:
+      enabled: true
+      description: "Dark mode theme across all platforms"
+      scope: GENERAL
+    GENERAL_NOTIFICATION_CENTER:
+      enabled: false
+      description: "Notification bell and panel for all platforms"
+      scope: GENERAL
+    BACKEND_ADVANCED_SEARCH:
+      enabled: true
+      description: "Advanced search endpoint with filters and facets"
+      scope: BACKEND
+    BACKEND_AI_RECOMMENDATIONS:
+      enabled: false
+      description: "AI-powered product recommendations endpoint"
+      scope: BACKEND
+    WEB_NEW_DASHBOARD:
+      enabled: true
+      description: "Redesigned dashboard layout for Angular"
+      scope: WEB
+    WEB_EXPERIMENTAL_CHARTS:
+      enabled: false
+      description: "Experimental chart components in Angular"
+      scope: WEB
+    MOBILE_BIOMETRIC_AUTH:
+      enabled: true
+      description: "Biometric authentication UI in Flutter"
+      scope: MOBILE
+    MOBILE_OFFLINE_MODE:
+      enabled: false
+      description: "Offline mode banner and sync indicator in Flutter"
+      scope: MOBILE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.learnff: DEBUG
