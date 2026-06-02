@@ -9,10 +9,24 @@ import { FeatureFlag, FlagScope } from '../../core/feature-flag.model';
     <div class="flag-manager">
       <div class="header">
         <h2>Feature Flag Manager</h2>
-        <button class="btn btn-outline" (click)="reset()">Reset to Defaults</button>
+        <div class="header-right">
+          <span class="badge" [class]="flagService.provider() === 'unleash' ? 'badge-green' : 'badge-blue'">
+            Provider: {{ flagService.provider() === 'unleash' ? '🚩 Unleash' : '⚙️ Backend YAML' }}
+          </span>
+          @if (flagService.provider() !== 'unleash') {
+            <button class="btn btn-outline" (click)="reset()">Reset to Defaults</button>
+          }
+        </div>
       </div>
       <p class="subtitle">
-        Toggle flags below. Changes are sent to the backend (with local fallback if unreachable).
+        Toggle flags below.
+        @if (flagService.provider() === 'unleash') {
+          Changes are applied directly in Unleash. Open
+          <a href="http://localhost:4242" target="_blank">localhost:4242</a>
+          to manage from the UI.
+        } @else {
+          Changes are in-memory on the backend (with local fallback if unreachable).
+        }
       </p>
 
       @if (flagService.error()) {
@@ -52,6 +66,8 @@ import { FeatureFlag, FlagScope } from '../../core/feature-flag.model';
   styles: [`
     .flag-manager { display: flex; flex-direction: column; gap: 28px; }
     .header { display: flex; justify-content: space-between; align-items: center; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    a { color: var(--color-primary); }
     .subtitle { color: var(--color-text-muted); }
     .alert { background: #fef3c7; border: 1px solid #f59e0b; color: #92400e; padding: 10px 14px; border-radius: var(--radius); }
     .scope-section { display: flex; flex-direction: column; gap: 12px; }

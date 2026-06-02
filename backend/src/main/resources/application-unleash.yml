@@ -1,0 +1,7 @@
+unleash:
+  api-url: ${UNLEASH_API_URL:http://localhost:4242/api}
+  client-key: ${UNLEASH_CLIENT_KEY:default:development.unleash-client-token}
+  admin-key: ${UNLEASH_ADMIN_KEY:*:*.unleash-admin-token}
+  app-name: learn-feature-flags-backend
+  environment: development
+  project: default

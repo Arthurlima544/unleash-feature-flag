@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/feature_flag_service.dart';
+import 'core/unleash_feature_flag_service.dart';
 import 'core/feature_flag_model.dart';
 import 'features/home/home_screen.dart';
 import 'features/settings/flag_manager_screen.dart';
 
+// ── provider selection ──────────────────────────────────────────────────────
+// Swap this constant to switch between Unleash and the Spring Boot backend.
+const bool _useUnleash = true;
+
+FeatureFlagService _createFlagService() =>
+    _useUnleash ? UnleashFeatureFlagService() : FeatureFlagService();
+// ────────────────────────────────────────────────────────────────────────────
+
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => FeatureFlagService()..loadFlags(),
+      create: (_) => _createFlagService()..loadFlags(),
       child: const FeatureFlagsApp(),
     ),
   );

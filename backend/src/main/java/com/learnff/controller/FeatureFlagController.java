@@ -55,8 +55,12 @@ public class FeatureFlagController {
     }
 
     @PostMapping("/reset")
-    public Map<String, String> resetToDefaults() {
-        flagService.resetToDefaults();
-        return Map.of("status", "All flags reset to defaults from application.yml");
+    public ResponseEntity<Map<String, String>> resetToDefaults() {
+        try {
+            flagService.resetToDefaults();
+            return ResponseEntity.ok(Map.of("status", "All flags reset to defaults from application.yml"));
+        } catch (UnsupportedOperationException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 }
